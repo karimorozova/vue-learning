@@ -1,23 +1,16 @@
 <template>
 
- <!-- <p>Likes quantity {{likes}}</p>
- <p>Dislikes quantity {{dislikes}}</p>
-  <button @click="addLike">Like</button>
-  <button @click="addDislike">Dislike</button> -->
-<!-- <article class="article">
-  <h2 class="article-title">I'm smart</h2>
-  <p class="description">I can do whatever I want</p>
-</article>
-<article class="article">
-  <h2 class="article-title">I'm brave</h2>
-  <p class="description">I can fix all my stuff</p>
-</article> -->
 <div class="app">
-  <post-form @create="createPost"/>
-<post-list :posts="posts"/>
-
-
+  <my-dialog :show="true">
+<post-form @create="createPost"/>
+  </my-dialog>
+  
+<post-list 
+:posts="posts"
+@remove="removePost"
+/>
  </div>
+
 </template>
 
 
@@ -55,6 +48,9 @@ export default {
     createPost(post) {
     this.posts.push(post)
     },
+    removePost(post) {
+      this.posts = this.posts.filter(p => p.id !== post.id)
+    }
     // inputTitle(e) {
     //   this.title = e.target.value
     // },
