@@ -1,14 +1,29 @@
 <template>
 
 <div class="app">
-  <my-dialog :show="true">
+  <h1 class="page-title">Page with posts</h1>
+  <!-- <input type="text" v-model.number="modificatorValue"> -->
+  <!-- <my-button @click="fetchUsers">
+    Get posts list
+  </my-button> -->
+  <div class="app-btns">
+<my-button
+   @click="showDialog">
+    Create post</my-button>
+
+    <my-select v-model="selectedSort" :options="sortOptions"/>
+  </div>
+  
+  <my-dialog v-model:show="dialogVisible">
 <post-form @create="createPost"/>
   </my-dialog>
   
 <post-list 
 :posts="posts"
 @remove="removePost"
+v-if="!isPostLoading"
 />
+<div v-else>Loading...</div>
  </div>
 
 </template>
@@ -17,29 +32,30 @@
 <script>
 import PostList from '@/components/PostList.vue'
 import PostForm from '@/components/PostForm.vue'
+import axios from 'axios'
+
 
 export default {
   components: {
     PostList,
     PostForm
+   
   },
   data() {
     return {
-     posts: [
+     posts: [],
+     dialogVisible: false,
+     modificatorValue: '',
+     isPostLoading: false,
+     selectedSort: '',
+     sortOptions: [
        {
-         id: 1,
-         title: 'My skills',
-         body: "About the skill"
+         value: 'title',
+         name: 'By title'
        },
        {
-         id: 2,
-         title: 'My skills 2',
-         body: "About the skill"
-       },
-       {
-         id: 3,
-         title: 'My skills 3',
-         body: "About the skill"
+         value: 'body',
+         name: 'By description'
        }
      ]
     }
@@ -47,9 +63,32 @@ export default {
   methods: {
     createPost(post) {
     this.posts.push(post)
+    this.dialogVisible = false
     },
     removePost(post) {
       this.posts = this.posts.filter(p => p.id !== post.id)
+    },
+    showDialog() {
+      this.dialogVisible = true
+    },
+    async fetchUsers() {
+      try {
+        this.isPostLoading = true;
+        // setTimeout(async () => {
+        //   const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+        // // console.log(response);
+        // this.posts = response.data;
+        // this.isPostLoading = false;
+        // }, 1000)
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+        // console.log(response);
+        this.posts = response.data;
+      } catch (error) {
+        alert('Error!')
+      } finally {
+        this.isPostLoading = false;
+      }
+
     }
     // inputTitle(e) {
     //   this.title = e.target.value
@@ -57,7 +96,10 @@ export default {
     // inputBody(e) {
     //   this.body = e.target.value
     // }
-  }
+  },
+  mounted() {
+        this.fetchUsers();
+    }
   
 
 }
@@ -71,6 +113,15 @@ export default {
 }
 .app {
   padding: 20px;
+}
+.page-title {
+  margin-bottom: 20px;
+}
+
+.app-btns {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
 }
 
 </style>

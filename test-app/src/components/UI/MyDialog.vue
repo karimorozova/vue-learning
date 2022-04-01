@@ -1,6 +1,6 @@
 <template>
-  <div class="dialog" v-if="show">
-      <div class="dialog-content">
+  <div class="dialog" v-if="show" @click.stop="hideDialog">
+      <div @click.stop class="dialog-content">
           <slot></slot>
       </div>
   </div>
@@ -13,6 +13,11 @@ props: {
     show: {
         type: Boolean,
         default: false,
+    }
+},
+methods: {
+    hideDialog() {
+        this.$emit('update:show', false)
     }
 }
 }
@@ -35,5 +40,6 @@ props: {
     border-radius: 12px;
     min-width: 300px;
     min-height: 50px;
+    padding: 30px;
 }
 </style>
