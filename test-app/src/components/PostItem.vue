@@ -7,6 +7,7 @@
   <p class="description">{{post.body}}</p>
   </div>
   <div class="btn-wrapper">
+      <my-button class="delete-btn">Open</my-button>
       <my-button class="delete-btn" @click="$emit('remove', post)">Delete</my-button>
   </div>
 </div>
@@ -48,5 +49,9 @@ margin-bottom: 30px;
 .description {
   
   font-size: 16px;
+}
+.btn-wrapper {
+    display: flex;
+    justify-content: space-between;
 }
 </style>
