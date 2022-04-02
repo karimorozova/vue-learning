@@ -1,6 +1,8 @@
 <template>
   <div class="post">
+      
       <div class="text-wrapper">
+          <div>{{post.id}}</div>
   <h2 class="post-title">{{post.title}}</h2>
   <p class="description">{{post.body}}</p>
   </div>
