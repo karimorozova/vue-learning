@@ -30,7 +30,16 @@ export default {
         body: '',
       }
     }
-  }
+  },
+  // watch: {
+  //   post: {
+  //     handler(v) {
+  //       console.log(v);
+  //     },
+  //     deep: true
+      
+  //   }
+  // }
 
 }
 </script>

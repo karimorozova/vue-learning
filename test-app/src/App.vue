@@ -2,6 +2,7 @@
 
 <div class="app">
   <h1 class="page-title">Page with posts</h1>
+  <my-input type="text" v-model="searchQuery" placeholder="Search..."/>
   <!-- <input type="text" v-model.number="modificatorValue"> -->
   <!-- <my-button @click="fetchUsers">
     Get posts list
@@ -19,7 +20,7 @@
   </my-dialog>
   
 <post-list 
-:posts="posts"
+:posts="searchAndSortedPosts"
 @remove="removePost"
 v-if="!isPostLoading"
 />
@@ -57,7 +58,8 @@ export default {
          value: 'body',
          name: 'By description'
        }
-     ]
+     ],
+     searchQuery: '',
     }
   },
   methods: {
@@ -99,7 +101,26 @@ export default {
   },
   mounted() {
         this.fetchUsers();
-    }
+    },
+    computed: {
+      sortedPosts() {
+        return [...this.posts].sort((firstPost, nextPost) => firstPost[this.selectedSort]?.localeCompare(nextPost[this.selectedSort]))
+      },
+      searchAndSortedPosts() {
+        return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
+      }
+    },
+    // watch: {
+    //   selectedSort(newValue) {
+    //     // console.log(newValue);
+    //     this.posts.sort((firstPost, nextPost) => {
+    //       return firstPost[newValue]?.localeCompare(nextPost[newValue])
+    //     })
+    //   },
+    //   // dialogVisible(value) {
+    //   //   console.log(value);
+    //   // } 
+    // }
   
 
 }
