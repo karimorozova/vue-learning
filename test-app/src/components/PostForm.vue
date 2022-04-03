@@ -1,7 +1,7 @@
 <template>
   <form class="create-post" @submit.prevent>
   <h4 class="form-title">Add new post</h4>
-  <my-input v-model="post.title" type="text"  placeholder="Title"/>
+  <my-input v-focus v-model="post.title" type="text"  placeholder="Title"/>
   <my-input v-model="post.body" type="text"  placeholder="Body"/>
   <my-button class="create" @click="createPost" >Create post</my-button>
 </form>

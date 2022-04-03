@@ -2,7 +2,7 @@
 
 <div >
   <h1 class="page-title">Page with posts</h1>
-  <my-input type="text" v-model="searchQuery" placeholder="Search..."/>
+  <my-input type="text" v-model="searchQuery" v-focus placeholder="Search..."/>
   <!-- <input type="text" v-model.number="modificatorValue"> -->
   <!-- <my-button @click="fetchUsers">
     Get posts list
@@ -25,7 +25,7 @@
 v-if="!isPostLoading"
 />
 <div v-else>Loading...</div>
-<div ref="observer" class="observer"></div>
+<div v-intersection="loadMorePosts" class="observer"></div>
 <!-- <div class="page-wrapper">
   <div 
   class="page" 
@@ -150,21 +150,20 @@ export default {
   },
   mounted() {
         this.fetchUsers();
-        // console.log(this.$refs.observer);
-        const options = {
-            rootMargin: '0px',
-            threshold: 1.0
-        }
-        const callback = (entries) => {
-    if(entries[0].isIntersecting && this.page < this.totalPages) {
-        this.loadMorePosts();
-        // console.log(observer);
-        
-    }
+        //  console.log(this.$refs.observer);
+    //     const options = {
+    //         rootMargin: '0px',
+    //         threshold: 1.0
+    //     }
+    //     const callback = (entries) => {
+    // if(entries[0].isIntersecting && this.page < this.totalPages) {
+    //     this.loadMorePosts();
+    //     // console.log(observer);
+    // }
     
-        };
-        const observer = new IntersectionObserver(callback, options);
-        observer.observe(this.$refs.observer);
+    //     };
+    //     const observer = new IntersectionObserver(callback, options);
+    //     observer.observe(this.$ref.observer);
     },
     computed: {
       sortedPosts() {
