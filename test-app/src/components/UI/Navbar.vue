@@ -4,6 +4,8 @@
           <div class="nav-btns">
               <my-button @click="$router.push('/posts')">Our posts</my-button>
               <my-button @click="$router.push('/about')">About me</my-button>
+               <my-button @click="$router.push('/store')">Store</my-button>
+               <my-button @click="$router.push('/composition')">Composition</my-button>
           </div>
       
        <!-- <router-link to="/posts">Our Posts</router-link>
